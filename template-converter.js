@@ -48,10 +48,10 @@ window.templateConverter = (function () {
 	}
 
 	function TemplateBuilder(virtual, level) {
-		this.virtual = virtual
-		this.level = level
-		this.virtuals = []
-		this.indented = false
+		this.virtual = virtual;
+		this.level = level;
+		this.virtuals = [];
+		this.indented = false;
 	}
 
 	TemplateBuilder.prototype = {
@@ -60,27 +60,30 @@ window.templateConverter = (function () {
 				this.indented = true
 			} else {
 				console.log(el)
+				//if(el == '' || el == ' ') return;
+				//if(el == null || el == undefined) return;
 				this.virtuals.push('"' + el.replace(/(["\r\n])/g, "\$1") + '"')
 			}
 		},
 
 		addVirtualAttrs: function (el) {
-			var virtual = el.tag === "div" ? "" : el.tag
-
+			var virtual = el.tag === "div" ? "" : el.tag;
+			//if (el.tag == "br") return;
+			console.log(el)
 			if (el.attrs.class) {
-				virtual += "." + el.attrs.class.replace(/\s+/g, ".")
-				el.attrs.class = undefined
+				virtual += "." + el.attrs.class.replace(/\s+/g, ".");
+				el.attrs.class = undefined;
 			}
 
 			each(Object.keys(el.attrs).sort(), function (attrName) {
-				if (attrName === "style") return
+				if (attrName === "style") return;
 				if(el.attrs[attrName]===undefined) return;
-				virtual += "[" + attrName + "='"
-				virtual += el.attrs[attrName].replace(/'/g, "\\'") + "']"
+				virtual += "[" + attrName + "='";
+				virtual += el.attrs[attrName].replace(/'/g, "\\'") + "']";
 			})
 
 			if (virtual === "") virtual = "div"
-			virtual = '"' + virtual + '"'
+			virtual = '"' + virtual + '"';
 
 			if (el.attrs.style) {
 				var style = "{\"" + el.attrs.style
