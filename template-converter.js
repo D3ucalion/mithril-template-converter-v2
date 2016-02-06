@@ -59,6 +59,7 @@ window.templateConverter = (function () {
 			if (/\t| {2,}/.test(el) && /^\s*/.test(el)) {
 				this.indented = true
 			} else {
+				console.log(el)
 				this.virtuals.push('"' + el.replace(/(["\r\n])/g, "\$1") + '"')
 			}
 		},
@@ -133,7 +134,7 @@ window.templateConverter = (function () {
 		},
 
 		view: function (ctrl) {
-			return m('div', [m("button.btn", {onclick: ctrl.convert}, "Convert"),m('br'),m('br'),m('br'), m("button.btn", {id: 'nested', onclick: ctrl.Nested}, "Nested"),
+			return m('div', [m("button.btn", {onclick: ctrl.convert}, "Convert"),m('br'),m('br'),//m('br'), m("button.btn", {id: 'nested', onclick: ctrl.Nested}, "Nested"),
         			    m("div", [
         				m("textarea", {
         					autofocus: true,
