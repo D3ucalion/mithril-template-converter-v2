@@ -56,10 +56,14 @@ window.templateConverter = (function () {
 
 	TemplateBuilder.prototype = {
 		addVirtualString: function (el) {
-			if (/\t| {2,}/.test(el) && /^\s*/.test(el)) {
+			
+			if (el.length <= 2){return}
+			
+			else if (/\t| {2,}/.test(el) && /^\s*/.test(el)) {
+				console.log(el.length)
 				this.indented = true
 			} else {
-				console.log(el)
+				//console.log(el)
 				//if(el == '' || el == ' ') return;
 				//if(el == null || el == undefined) return;
 				this.virtuals.push('"' + el.replace(/(["\r\n])/g, "\$1") + '"')
@@ -69,7 +73,8 @@ window.templateConverter = (function () {
 		addVirtualAttrs: function (el) {
 			var virtual = el.tag === "div" ? "" : el.tag;
 			//if (el.tag == "br") return;
-			console.log(el)
+			//console.log(el)
+			
 			if (el.attrs.class) {
 				virtual += "." + el.attrs.class.replace(/\s+/g, ".");
 				el.attrs.class = undefined;
@@ -106,6 +111,7 @@ window.templateConverter = (function () {
 
 			each(this.virtual, function (el) {
 				if (typeof el === "string") {
+					
 					this.addVirtualString(el)
 				} else {
 					this.addVirtualAttrs(el)
